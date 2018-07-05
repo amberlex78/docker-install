@@ -28,17 +28,13 @@ done
 
 
 echo ;
-echo "------------ Install extra packages"
-sudo apt-get install \
-    linux-image-extra-$(uname -r) \
-    linux-image-extra-virtual
+echo "------------ Add docker GPG key"
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
 
 echo ;
-echo "------------ Add docker GPG key"
-sudo apt-key adv \
-    --keyserver hkp://p80.pool.sks-keyservers.net:80 \
-    --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+echo "------------ Verify fingerprint"
+sudo apt-key fingerprint 0EBFCD88
 
 
 echo ;
@@ -47,19 +43,19 @@ if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
     else
-        echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
+        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu    xenial    stable" | sudo tee /etc/apt/sources.list.d/docker.list
 fi
 
 
 echo ;
 echo "------------ Install Docker"
-cmd=$(dpkg -s docker-engine 2>/dev/null | grep "ok installed")
+cmd=$(dpkg -s docker-ce 2>/dev/null | grep "ok installed")
 if [ $? == 0 ]
     then
-        echo "The 'docker-engine' is already exists."
+        echo "The 'docker-ce' is already exists."
     else
-        echo "The 'docker-engine' NOT INSTALLED. Installing..."
-        sudo apt-get install -y docker-engine
+        echo "The 'docker-ce' NOT INSTALLED. Installing..."
+        sudo apt-get update && sudo apt-get install docker-ce
 fi
 
 
