@@ -74,12 +74,6 @@ fi
 
 
 echo ;
-echo "------------ Check versions"
-docker -v
-docker-compose -v
-
-
-echo ;
 echo "------------ Add group 'docker'"
 group=$(getent group docker | grep "docker")
 if [ $? == 0 ]
@@ -101,6 +95,12 @@ if [ $? == 0 ]
         sudo usermod -aG docker $USER
         echo "User '$USER' was added to 'docker' group."
 fi
+
+
+echo ;
+echo "------------ Check versions"
+docker -v
+docker-compose -v
 
 
 echo ;
