@@ -10,10 +10,14 @@ echo ;
 echo "------------ Update the APT packages indexes"
 sudo apt-get update
 
+echo ;
+echo "------------ Uninstall old versions"
+sudo apt-get remove docker docker-engine docker.io containerd run
+sudo apt-get update
 
 echo ;
 echo "------------ Check packages"
-packages="apt-transport-https ca-certificates curl mintsources gnupg-agent software-properties-common"
+packages="apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
 for package in $packages
 do
     cmd=$(dpkg -s $package 2>/dev/null | grep "ok installed")
@@ -38,7 +42,7 @@ sudo apt-key fingerprint 0EBFCD88
 
 
 echo ;
-echo "------------ Add docker deb for 18.04"
+echo "------------ Add docker deb for 19.1"
 if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
