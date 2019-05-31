@@ -12,6 +12,7 @@ sudo apt-get update
 
 echo ;
 echo "------------ Uninstall old versions"
+rm $(which docker-compose)
 sudo apt-get remove docker docker-engine docker.io containerd run
 sudo apt-get update
 
