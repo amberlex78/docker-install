@@ -43,7 +43,7 @@ sudo apt-key fingerprint 0EBFCD88
 
 
 echo ;
-echo "------------ Add docker deb for 19.1"
+echo "------------ Add docker deb for Ubuntu bionic 18.04"
 if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
@@ -66,6 +66,7 @@ fi
 
 echo ;
 echo "------------ install Docker Compose";
+echo "------------ All releases: https://github.com/docker/compose/releases"
 if [ -a /usr/local/bin/docker-compose ]
     then
         echo "The 'docker-compose' is already exists."
