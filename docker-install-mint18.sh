@@ -7,13 +7,17 @@
 #############################################################################
 
 echo ;
+echo "------------ Uninstall old versions"
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
+
+echo ;
 echo "------------ Update the APT packages indexes"
 sudo apt-get update
 
 
 echo ;
 echo "------------ Check packages"
-packages="apt-transport-https ca-certificates curl mintsources"
+packages="apt-transport-https ca-certificates curl gnupg-agent software-properties-common mintsources"
 for package in $packages
 do
     cmd=$(dpkg -s $package 2>/dev/null | grep "ok installed")
@@ -38,12 +42,14 @@ sudo apt-key fingerprint 0EBFCD88
 
 
 echo ;
-echo "------------ Add docker deb for 16.04"
+echo "------------ Add docker deb for 16.04 (Mint 18.x on Ubuntu Xenial)"
 if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
     else
-        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu    xenial    stable" | sudo tee /etc/apt/sources.list.d/docker.list
+        # Releases: https://linuxmint.com/download_all.php
+        # Releases: https://download.docker.com/linux/ubuntu/dists/
+        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" | sudo tee /etc/apt/sources.list.d/docker.list
 fi
 
 
@@ -55,7 +61,7 @@ if [ $? == 0 ]
         echo "The 'docker-ce' is already exists."
     else
         echo "The 'docker-ce' NOT INSTALLED. Installing..."
-        sudo apt-get update && sudo apt-get install docker-ce
+        sudo apt-get update && sudo apt-get install -y docker-ce
 fi
 
 
@@ -67,7 +73,7 @@ if [ -a /usr/local/bin/docker-compose ]
     else
         # Releases: https://github.com/docker/compose/releases
         sudo curl \
-            -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m) \
+            -L https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m) \
             -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
 fi
