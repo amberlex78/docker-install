@@ -17,7 +17,7 @@ sudo apt-get update
 
 echo ;
 echo "------------ Check packages"
-packages="apt-transport-https ca-certificates curl gnupg-agent software-properties-common mintsources"
+packages="apt-transport-https ca-certificates curl gnupg-agent lsb-release mintsources"
 for package in $packages
 do
     cmd=$(dpkg -s $package 2>/dev/null | grep "ok installed")
