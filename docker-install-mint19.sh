@@ -43,12 +43,12 @@ sudo apt-key fingerprint 0EBFCD88
 
 
 echo ;
-echo "------------ Add docker deb for Ubuntu bionic 18.04"
+echo "------------ Add docker deb for Ubuntu Bionic 19.04"
 if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
     else
-        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu    bionic    stable" | sudo tee /etc/apt/sources.list.d/docker.list
+        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" | sudo tee /etc/apt/sources.list.d/docker.list
 fi
 
 
