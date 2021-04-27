@@ -9,6 +9,28 @@ git clone git@github.com:amberlex78/docker-install.git
 cd docker-install
 ~~~
 
+## Install Docker on Linux Mint 20
+
+Distros linux:
+
+[Linux Mint 20.1 "Ulyssa" - Cinnamon (64-bit)](https://linuxmint.com/edition.php?id=284)
+
+[Linux Mint 20.1 "Ulyssa" - MATE (64-bit)](https://linuxmint.com/edition.php?id=285)
+
+For run script:
+
+`./docker-install-mint20.sh`
+
+## Install Docker on Linux Mint 19
+
+[Linux Mint 19.3 "Tricia" - Cinnamon (64-bit)](https://linuxmint.com/edition.php?id=274)
+
+[Linux Mint 19.3 "Tricia" - MATE (64-bit)](https://linuxmint.com/edition.php?id=276)
+
+For run script: 
+
+`./docker-install-mint19.sh`
+
 ## Install Docker on Linux Mint 18
 
 Distros linux:
@@ -20,13 +42,3 @@ Distros linux:
 For run script:
 
 `./docker-install-mint18.sh`
-
-## Install Docker on Linux Mint 19
-
-[Linux Mint 19.3 "Tricia" - Cinnamon (64-bit)](https://linuxmint.com/edition.php?id=274)
-
-[Linux Mint 19.3 "Tricia" - MATE (64-bit)](https://linuxmint.com/edition.php?id=276)
-
-For run script: 
-
-`./docker-install-mint19.sh`
