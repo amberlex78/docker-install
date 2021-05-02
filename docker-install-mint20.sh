@@ -60,7 +60,7 @@ if [ $? == 0 ]
         echo "The 'docker-ce' is already exists."
     else
         echo "The 'docker-ce' NOT INSTALLED. Installing..."
-        sudo apt-get update && sudo apt-get install docker-ce docker-ce-cli containerd.io
+        sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 fi
 
 
