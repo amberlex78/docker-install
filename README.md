@@ -21,16 +21,6 @@ For run script:
 
 `./docker-install-mint20.sh`
 
-## Install Docker on Linux Mint 19
-
-[Linux Mint 19.3 "Tricia" - Cinnamon (64-bit)](https://linuxmint.com/edition.php?id=274)
-
-[Linux Mint 19.3 "Tricia" - MATE (64-bit)](https://linuxmint.com/edition.php?id=276)
-
-For run script: 
-
-`./docker-install-mint19.sh`
-
 ## Install Docker on Linux Mint 18
 
 Distros linux:
