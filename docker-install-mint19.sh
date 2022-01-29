@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #############################################################################
-# Install Docker on Linux Mint 20
+# Install Docker on Linux Mint 19
 #
 # https://github.com/amberlex78/docker-install
 #############################################################################
@@ -18,7 +18,7 @@ sudo apt-get update
 
 echo ;
 echo "------------ Check packages"
-packages="apt-transport-https ca-certificates curl gnupg lsb-release software-properties-common"
+packages="apt-transport-https ca-certificates curl gnupg-agent lsb-release software-properties-common"
 for package in $packages
 do
     cmd=$(dpkg -s $package 2>/dev/null | grep "ok installed")
@@ -43,14 +43,14 @@ sudo apt-key fingerprint 0EBFCD88
 
 
 echo ;
-echo "------------ Add docker deb for Ubuntu Focal 20.04 (Mint 20.x)"
+echo "------------ Add docker deb for Ubuntu Bionic 18.04 (Mint 19.x)"
 if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
     else
         # Releases: https://linuxmint.com/download_all.php
         # Releases: https://download.docker.com/linux/ubuntu/dists/
-        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" | sudo tee /etc/apt/sources.list.d/docker.list
+        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" | sudo tee /etc/apt/sources.list.d/docker.list
 fi
 
 

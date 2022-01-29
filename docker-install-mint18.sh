@@ -7,13 +7,14 @@
 #############################################################################
 
 echo ;
-echo "------------ Uninstall old versions"
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
-
-echo ;
 echo "------------ Update the APT packages indexes"
 sudo apt-get update
 
+echo ;
+echo "------------ Uninstall old versions"
+rm $(which docker-compose)
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get update
 
 echo ;
 echo "------------ Check packages"
@@ -42,7 +43,7 @@ sudo apt-key fingerprint 0EBFCD88
 
 
 echo ;
-echo "------------ Add docker deb for 16.04 (Mint 18.x on Ubuntu Xenial)"
+echo "------------ Add docker deb for Ubuntu Xenial 16.04 (Mint 18.x)"
 if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
@@ -67,13 +68,14 @@ fi
 
 echo ;
 echo "------------ install Docker Compose";
+echo "------------ All releases: https://github.com/docker/compose/releases"
 if [ -a /usr/local/bin/docker-compose ]
     then
         echo "The 'docker-compose' is already exists."
     else
         # Releases: https://github.com/docker/compose/releases
         sudo curl \
-            -L https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m) \
+            -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) \
             -o /usr/local/bin/docker-compose
         sudo chmod +x /usr/local/bin/docker-compose
 fi
