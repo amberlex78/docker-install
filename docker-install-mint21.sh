@@ -94,7 +94,7 @@ docker compose version
 
 
 echo ;
-echo "10------------ docker run hello-word"
+echo "10------------ docker run hello-world"
 docker run hello-world
 
 

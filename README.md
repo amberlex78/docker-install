@@ -4,8 +4,8 @@ Install Docker on Linux Mint
 
 Scripts for install `docker` and 
 
-- `docker-compose (V1)` for linux Mint 19, 20
-- `docker compose (V2)` for linux Mint 21
+- `docker-compose (V1)` for linux Mint 19
+- `docker compose (V2)` for linux Mint 20, 21
 
 ~~~
 git clone git@github.com:amberlex78/docker-install.git
