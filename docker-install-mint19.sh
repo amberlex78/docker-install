@@ -7,18 +7,20 @@
 #############################################################################
 
 echo ;
-echo "------------ Update the APT packages indexes"
-sudo apt-get update
+echo "01------------ Update the APT packages indexes"
+sudo apt update
+
 
 echo ;
-echo "------------ Uninstall old versions"
-rm $(which docker-compose)
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
-sudo apt-get update
+echo "02------------ Uninstall old versions"
+sudo sudo systemctl stop docker.socket
+sudo apt purge -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+sudo apt update
+
 
 echo ;
-echo "------------ Check packages"
-packages="apt-transport-https ca-certificates curl gnupg-agent lsb-release software-properties-common"
+echo "03------------ Check packages"
+packages="ca-certificates curl gnupg lsb-release"
 for package in $packages
 do
     cmd=$(dpkg -s $package 2>/dev/null | grep "ok installed")
@@ -27,19 +29,15 @@ do
             echo "$package INSTALLED."
         else
             echo "$package NOT INSTALLED. Installing..."
-            sudo apt-get install -y $package
+            sudo apt install -y $package
     fi
 done
 
 
 echo ;
-echo "------------ Add docker GPG key"
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-
-echo ;
-echo "------------ Verify fingerprint"
-sudo apt-key fingerprint 0EBFCD88
+echo "04------------ Add docker GPG key"
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 
 
 echo ;
@@ -48,41 +46,25 @@ if [ -a /etc/apt/sources.list.d/docker.list ]
     then
         echo "The deb package is already exists."
     else
-        # Releases: https://linuxmint.com/download_all.php
-        # Releases: https://download.docker.com/linux/ubuntu/dists/
-        echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" | sudo tee /etc/apt/sources.list.d/docker.list
+        # See PACKAGE BASE in https://linuxmint.com/download_all.php
+        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 fi
 
 
 echo ;
-echo "------------ Install Docker"
+echo "06------------ Install Docker"
 cmd=$(dpkg -s docker-ce 2>/dev/null | grep "ok installed")
 if [ $? == 0 ]
     then
         echo "The 'docker-ce' is already exists."
     else
         echo "The 'docker-ce' NOT INSTALLED. Installing..."
-        sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+        sudo apt update && sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 fi
 
 
 echo ;
-echo "------------ install Docker Compose";
-echo "------------ All releases: https://github.com/docker/compose/releases"
-if [ -a /usr/local/bin/docker-compose ]
-    then
-        echo "The 'docker-compose' is already exists."
-    else
-        # Releases: https://github.com/docker/compose/releases
-        sudo curl \
-            -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" \
-            -o /usr/local/bin/docker-compose
-        sudo chmod +x /usr/local/bin/docker-compose
-fi
-
-
-echo ;
-echo "------------ Add group 'docker'"
+echo "07------------ Add group 'docker'"
 group=$(getent group docker | grep "docker")
 if [ $? == 0 ]
     then
@@ -94,7 +76,7 @@ fi
 
 
 echo ;
-echo "------------ Add user '$USER' to the 'docker' group"
+echo "08------------ Add user '$USER' to the 'docker' group"
 user_group=$(groups $USER | grep "docker")
 if [ $? == 0 ]
     then
@@ -106,9 +88,10 @@ fi
 
 
 echo ;
-echo "------------ Check versions"
+echo "09------------ Check versions"
+sudo sudo systemctl restart docker
 docker -v
-docker-compose -v
+docker compose version
 
 
 echo ;
